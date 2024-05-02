@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google_Sheet_Datafetch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="hero">
+    <h3>Data Nova India Pvt. Ltd.</h3>
+    <h1>Enter your mail<br>So that we can send you details</h1>
+    <p>Have a nice day ahead <br> Data Nova Supports</p>
+    <form name="submit-to-google-sheet">
+      <input type="email" name="Email" placeholder="Your email id " required>
+      <button type="submit"><img src="send-icon.png" width= "30px"></button>
+    </form>
+    <span id="msg">Thank you for your message</span>
+  </div>
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzQY-W3-02I_T0u-xTzcZj6KmrzTyakFZpR_21gURa4hgmSg3OPQVGZEEp2e3btkUmOeA/exec'
+    const form = document.forms['submit-to-google-sheet']
+    const msg=document.getElementById("msg");
+
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          msg.innerHTML="Thanks for the message"
+          setTimeout(function(){
+            msg.innerHTML=""
+          },5000)
+          form.reset()
+        })
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
+</body>
+</html>
